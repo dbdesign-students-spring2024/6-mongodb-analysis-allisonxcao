@@ -15,12 +15,12 @@ The data selected is Air BnB listings from Albany. New York.
 I chose to scrub the data by deleting any columns that had blanks and also really long rows that are not as necessary for quanitative data analysis such as descriptions or host about. 
 
 ## Part 2: Data Analysis
-   1. show exactly two documents from the listings collection in any order.
-    '''
-    db.listings.find().limit(2)
-    '''
-    Outputs:
-    '''
+1. show exactly two documents from the listings collection in any order.
+'''
+db.listings.find().limit(2)
+'''
+Outputs:
+'''
     [
   {
     "name": "Welcoming, easygoing, comfy bed, entire level",
@@ -49,9 +49,9 @@ I chose to scrub the data by deleting any columns that had blanks and also reall
 '''
 db.listings.find().limit(10).pretty()
 '''
-    Output:
+Output:
 '''
-    [
+
   {
     "_id": 1,
     "name": "Welcoming, easygoing, comfy bed, entire level",
@@ -85,13 +85,13 @@ db.listings.find().limit(10).pretty()
     "beds": 4,
     "review_scores_rating": 4.74
   }
-  '''
+'''
 3. choose two hosts (by reffering to their host_id values) who are superhosts (available in the host_is_superhost field), and show all of the listings offered by both of the two hosts
 
 '''
 db.listings.find({host_id: {$in: [host_id1, host_id2]}, host_is_superhost: 't'}, {name: 1, price: 1, neighbourhood: 1, host_name: 1, host_is_superhost: 1})
 '''
-    Output:
+Output:
 '''
     [
   {"name": "Charming 1BR State Capitol, downtwn", "price": "$85.00", "neighbourhood": "Albany, New York, United States", "host_name": "Robert", "host_is_superhost": "t"},
