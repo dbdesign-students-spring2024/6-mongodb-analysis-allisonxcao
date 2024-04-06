@@ -16,11 +16,11 @@ I chose to scrub the data by deleting any columns that had blanks and also reall
 
 ## Part 2: Data Analysis
 1. show exactly two documents from the listings collection in any order.
-'''
+```
 db.listings.find().limit(2)
-'''
+```
 Outputs:
-'''
+```
     [
   {
     "name": "Welcoming, easygoing, comfy bed, entire level",
@@ -43,14 +43,14 @@ Outputs:
     "review_scores_rating": 3.56
   }
 ]
-'''
+```
 
 2. show exactly 10 documents in any order, but "prettyprint" in easier to read format, using the pretty() function.
-'''
+```
 db.listings.find().limit(10).pretty()
-'''
+```
 Output:
-'''
+```
 
   {
     "_id": 1,
@@ -85,28 +85,28 @@ Output:
     "beds": 4,
     "review_scores_rating": 4.74
   }
-'''
+```
 3. choose two hosts (by reffering to their host_id values) who are superhosts (available in the host_is_superhost field), and show all of the listings offered by both of the two hosts
 
-'''
+```
 db.listings.find({host_id: {$in: [host_id1, host_id2]}, host_is_superhost: 't'}, {name: 1, price: 1, neighbourhood: 1, host_name: 1, host_is_superhost: 1})
-'''
+```
 Output:
-'''
+```
     [
   {"name": "Charming 1BR State Capitol, downtwn", "price": "$85.00", "neighbourhood": "Albany, New York, United States", "host_name": "Robert", "host_is_superhost": "t"},
   {"/Fire Place Bungalow\\ 1917 SUNY Eagle 6Beds 2Bath": "$243.00", "neighbourhood": "Albany, New York, United States", "host_name": "Peter", "host_is_superhost": "t"},
   {"/Miller Colonial\\ 1946 SUNY Eagle Hill 5Bed 2Bath": "$333.00", "neighbourhood": "Albany, New York, United States", "host_name": "Peter", "host_is_superhost": "t"}
 ]
-'''
+```
 
 4. Find all the unique host_name values
 
-'''
+```
 db.listings.distinct('host_name')
-'''
+```
 Output:
-'''
+```
 {
   "_id": null,
   "unique_host_names": [
@@ -115,41 +115,41 @@ Output:
     "Terra",
  ]
 }
-'''
+```
 
 5. find all of the places that have more than 2 beds in a neighborhood of your choice (referred to as either the neighborhood or neighbourhood_group_cleansed fields in the data file), ordered by review_scores_rating descending
-'''
+```
 db.listings.find({neighbourhood: 'NeighborhoodName', beds: {$gt: 2}, review_scores_rating: {$ne: null}}).sort({review_scores_rating: -1})
-'''
+```
 Output:
-'''
+```
 [
   {"name": "Smoking allowed on front porch! Massage recliner!", "beds": 4, "review_scores_rating": 5.0, "price": "$150.00"},
   {"name": "Albany 3 Bedroom Apt. Sleeps 6", "beds": 4, "review_scores_rating": 5.0, "price": "$110.00"},
   {"name": "Comfy private room in a Residential House, Albany", "beds": 3, "review_scores_rating": 5.0, "price": "$45.00"}
 ]
-'''
+```
 
 6. show the number of listings per host
-'''
+```
 db.listings.aggregate([{$group: {_id: '$host_id', count: {$sum: 1}}}])
-'''
+```
 Output:
-'''
+```
 [
   {"host_name": "Aaron", "count": 1},
   {"host_name": "Abba", "count": 6},
   {"host_name": "Adam", "count": 2}
 ]
-'''
+```
 
 7. Find top 3 hosts with highest average review score
-''' 
+```
 db.listings.aggregate([{$group: {_id: "$host_name", averageRating: {$avg: "$review_scores_rating"}}}, {$match: {averageRating: {$gte: 4}}}, {$sort: {averageRating: -1}}, {$limit: 3}])
-'''
+```
 
 Output:
-'''
+```
 [
   {
     "host_name": "Ahmad",
@@ -163,8 +163,7 @@ Output:
     "host_name": "Andrew",
     "averageRating": 5.0
   }
-]
-'''
+```
 I selected a new field to find because neighborhood was split between Albany and N/A. 
 
 
